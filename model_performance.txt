@@ -1,0 +1,9 @@
+Logistic Regression → 96.23%
+Decision Tree → 95.85%
+KNN → 95.00%
+Random Forest → 97.13% (took ~9s)
+SVC (RBF Kernel) → 97.94% (BEST)
+Cross Validation Score (10-fold) → ~98%
+Confusion Matrix:
+[[958   2]
+ [ 21 134]]
