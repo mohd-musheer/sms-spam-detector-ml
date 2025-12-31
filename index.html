@@ -52,6 +52,21 @@ button{
     text-align:center;
     display:none;
 }
+
+/* Loader */
+.loader {
+    display:none;
+    border:6px solid #f0f0f0;
+    border-top:6px solid #00eaff;
+    border-radius:50%;
+    width:40px;
+    height:40px;
+    margin:15px auto;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
 </style>
 </head>
 <body>
@@ -62,6 +77,9 @@ button{
     <textarea id="message" placeholder="Enter message to classify..."></textarea>
     
     <button onclick="checkSpam()">Check Message</button>
+
+    <!-- Loader -->
+    <div class="loader" id="loader"></div>
     
     <div id="responseBox"></div>
 </div>
@@ -69,7 +87,7 @@ button{
 
 <script>
 
-const API = "https://spam-sms-detector-ml.onrender.com/predict";
+const API = "https://spam-sms-detector-ml.onrender.com/predict"; // FIX route
 
 async function checkSpam(){
     let message = document.getElementById("message").value.trim();
@@ -81,11 +99,18 @@ async function checkSpam(){
 
     const body = { message: message };
 
+    // show loader & hide old result
+    document.getElementById("loader").style.display = "block";
+    document.getElementById("responseBox").style.display = "none";
+
     const res = await fetch(API, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(body)
     });
+
+    // hide loader
+    document.getElementById("loader").style.display = "none";
 
     const json = await res.json();
 
@@ -93,7 +118,6 @@ async function checkSpam(){
     bx.style.display = "block";
     bx.innerText = json.message;
 
-    // Color response
     bx.style.background = 
         json.message.includes("SPAM") ? "#ff444455" : "#00ff9555";
 }
