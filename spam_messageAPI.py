@@ -2,7 +2,7 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel,Field
 import joblib
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse,HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware 
 
 
@@ -20,7 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get('/')
+@app.get('/',response_class=HTMLResponse)
 def home():
     with open('index.html','r') as f:
         return f.read()
