@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel,Field
 import joblib
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware 
+
 
 class DataCheck(BaseModel):
     message: str=Field(...,Description='Enter message',example='Congratulations! You won a free iPhone,click the link to claim now!')
