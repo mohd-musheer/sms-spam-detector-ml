@@ -5,9 +5,10 @@ A Machine Learning project to classify SMS messages as **Spam** or **Ham** using
 - TF-IDF Vectorization
 - Support Vector Machine (RBF Kernel)
 - Scikit-Learn Pipeline
+Live on : https://spam-sms-detector-ml.onrender.com
 
 
-
+api:https://spam-sms-detector-ml.onrender.com/predict
 ## 🧪 Model Performance Comparison
 
 This project tests multiple classifiers to find the best model for SMS Spam Detection.
