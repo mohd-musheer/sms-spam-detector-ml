@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spam SMS Detector</title>
+
+<style>
+body{
+    background:#0a1224;
+    font-family:Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    margin:0;
+    color:white;
+}
+.container{
+    width:400px;
+    padding:20px;
+    background:#101b33;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,200,255,.3);
+}
+h2{text-align:center;}
+textarea{
+    width:100%;
+    height:120px;
+    border:none;
+    border-radius:10px;
+    padding:10px;
+    margin-top:10px;
+    resize:none;
+}
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#00eaff;
+    color:#001829;
+    font-weight:bold;
+    cursor:pointer;
+}
+#responseBox{
+    margin-top:15px;
+    padding:12px;
+    font-size:18px;
+    border-radius:8px;
+    text-align:center;
+    display:none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📩 Spam SMS Detector</h2>
+    
+    <textarea id="message" placeholder="Enter message to classify..."></textarea>
+    
+    <button onclick="checkSpam()">Check Message</button>
+    
+    <div id="responseBox"></div>
+</div>
+
+
+<script>
+
+const API = "https://localhost:10000/predict";
+
+async function checkSpam(){
+    let message = document.getElementById("message").value.trim();
+    
+    if(message.length < 3){
+        alert("Please enter a valid message!");
+        return;
+    }
+
+    const body = { message: message };
+
+    const res = await fetch(API, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(body)
+    });
+
+    const json = await res.json();
+
+    let bx = document.getElementById("responseBox");
+    bx.style.display = "block";
+    bx.innerText = json.message;
+
+    // Color response
+    bx.style.background = 
+        json.message.includes("SPAM") ? "#ff444455" : "#00ff9555";
+}
+</script>
+
+</body>
+</html>
